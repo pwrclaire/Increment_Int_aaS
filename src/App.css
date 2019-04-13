@@ -1,3 +1,12 @@
 .App {
   text-align: center;
 }
+
+.nav {
+  height: 60px;
+  color: white;
+  font-size: 2em;
+  background-color: #71D8E6;
+  line-height: 60px;
+}
+
