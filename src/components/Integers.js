@@ -94,14 +94,19 @@ class Integers extends Component {
           alert(err.response.data);
         });
     } else {
-      alert("Cannot set integer to null or negative");
+      alert("Cannot set number!");
       return;
     }
   };
 
   render() {
     // Button style
-    const buttonState = this.state.value === "" || this.state.value === null || this.state.value < 0 ? true : false;
+    const buttonState =
+      this.state.value === "" ||
+      this.state.value === null ||
+      this.state.value < 0 ||
+      this.state.value > Number.MAX_SAFE_INTEGER ? true : false;
+
     return (
       <div>
         <div>{this.displayInteger()}</div>
