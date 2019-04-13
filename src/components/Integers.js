@@ -103,7 +103,7 @@ class Integers extends Component {
           console.log(err);
         });
     } else {
-      console.log("cannot set null or negative");
+      alert("Cannot set integer to value greater 9007199254740991");
       return;
     }
   };
