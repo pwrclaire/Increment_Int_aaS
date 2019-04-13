@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { apiBaseUrl } from "../services/api";
 import Cookies from "js-cookie";
-import RaisedButton from "material-ui/RaisedButton";
-import { TextField } from "material-ui";
-import CircularProgress from 'material-ui/CircularProgress'
+import { apiBaseUrl } from "../services/api";
+import { RaisedButton, TextField, CircularProgress } from "material-ui";
 
 const payload = Cookies.get("auth");
 
@@ -27,7 +25,6 @@ class Integers extends Component {
         }
       })
       .then(response => {
-        console.log("Resonse data: ", response);
         if (response.status === 200) {
           this.setState({
             integer: response.data.integer,
@@ -37,15 +34,13 @@ class Integers extends Component {
         }
       })
       .catch(err => {
-        console.log(err);
+        alert(err.response.data);
       });
   };
 
   displayInteger = () => {
     const data = this.state.integer;
-    console.log("state integer", data);
     if (data > -1) {
-      console.log("are my in display data");
       return <div>Current Integer: {data}</div>;
     }
   };
@@ -53,28 +48,25 @@ class Integers extends Component {
   incrementInteger = () => {
     this.setState({
       loading: true
-    })
+    });
     axios
       .get(apiBaseUrl + "/next", {
         headers: {
           authorization: payload
         }
       })
-      .then(response => {
-        console.log(response.data);
+      .then(() => {
         this.getInteger();
       })
       .catch(err => {
-        console.log(err);
+        alert(err.response.data);
       });
   };
 
   handleChange = event => {
-    console.log(event.target.value);
     this.setState({ value: event.target.value });
   };
 
-  // TODO: Restrict to numbers
   setInteger = () => {
     this.setState({
       loading: true
@@ -85,33 +77,31 @@ class Integers extends Component {
       axios
         .put(
           apiBaseUrl + "/current",
-          { int: value },
+          { current: value },
           {
             headers: {
               authorization: payload
             }
           }
         )
-        .then(response => {
-          console.log(response);
+        .then(() => {
           this.setState({
             value: ""
           });
           this.getInteger();
         })
         .catch(err => {
-          console.log(err);
+          alert(err.response.data);
         });
     } else {
-      console.log("cannot set null or negative");
+      alert("Cannot set integer to null or negative");
       return;
     }
   };
 
   render() {
-    const buttonState =
-      this.state.value === "" || this.state.value === null ? true : false;
-
+    // Button style
+    const buttonState = this.state.value === "" || this.state.value === null || this.state.value < 0 ? true : false;
     return (
       <div>
         <div>{this.displayInteger()}</div>
@@ -119,10 +109,10 @@ class Integers extends Component {
         {this.state.loading ?
           <CircularProgress/> :
           <RaisedButton
-            style={styles.button}
+            primary={true}
+            label="Next Integer"
             onClick={() => this.incrementInteger()}
           >
-          Next Integer
         </RaisedButton>}
         
         <br/>
@@ -133,21 +123,16 @@ class Integers extends Component {
           value={this.state.value}
           onChange={this.handleChange}
         />
-        <RaisedButton onClick={() => this.setInteger()} disabled={buttonState}>
-          Reset Integer
+        <RaisedButton
+          primary={true}
+          label="Reset Integer"
+          disabled={buttonState}
+          onClick={() => this.setInteger()}
+          >
         </RaisedButton>
       </div>
     );
   }
 }
-
-const styles = () => ({
-  button: {
-    margin: "20px"
-  },
-  input: {
-    display: "none"
-  }
-});
 
 export default Integers;
