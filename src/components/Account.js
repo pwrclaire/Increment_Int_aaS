@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 
 import Integers from "./Integers";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import AppBar from "material-ui/AppBar";
 
 class Account extends Component {
   logout = () => {
@@ -16,21 +15,34 @@ class Account extends Component {
     return (
       <MuiThemeProvider>
         <div>
-          <AppBar title="My Account">
-            <button
-              onClick={() => {
+          <div className="nav">My Account
+          <span
+            style={styles.logout}
+            onClick={() => {
                 this.logout();
               }}
             >
               Logout
-            </button>
-          </AppBar>
+            </span>
+          </div>
           <br />
           <Integers />
           <br />
+
         </div>
       </MuiThemeProvider>
     );
+  }
+}
+
+const styles = {
+  logout: {
+    right:'0',
+    height: '60px',
+    position:'fixed',
+    cursor: 'pointer',
+    fontSize: '20px',
+    paddingRight: '10px'
   }
 }
 

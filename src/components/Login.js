@@ -4,18 +4,15 @@ import Cookies from "js-cookie";
 import { apiBaseUrl } from "../services/api";
 
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import { AppBar, RaisedButton, TextField} from "material-ui";
+import { RaisedButton, TextField} from "material-ui";
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+    state = {
       email: "",
       password: "",
       buttonLabel: "Register",
       isLogin: true
     };
-  }
 
   handleLogin = () => {
     const self = this;
@@ -25,20 +22,16 @@ class Login extends Component {
     };
     axios
       .post(apiBaseUrl + "/login", payload)
-      .then(function(response) {
+      .then(response => {
         if (response.status === 200) {
           const token = response.data.Authorization;
           Cookies.set("auth", token);
           self.props.history.push("/account");
           window.location.reload();
-        } else if (response.status === 401) {
-          alert("email password do not match");
-        } else {
-          alert("email does not exist");
         }
       })
-      .catch(function(error) {
-        alert("email and password does not match");
+      .catch(error => {
+        alert(error.response.data);
       });
   }
 
@@ -47,7 +40,7 @@ class Login extends Component {
       <div>
         <MuiThemeProvider>
           <div>
-            <AppBar title="Login" />
+            <div className="nav">LOGIN</div>
             <TextField
               hintText="Enter your email"
               floatingLabelText="Email"

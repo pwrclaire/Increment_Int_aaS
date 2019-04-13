@@ -3,23 +3,19 @@ import axios from "axios";
 import { apiBaseUrl } from "../services/api";
 
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import { AppBar, RaisedButton, TextField} from "material-ui";
+import { RaisedButton, TextField} from "material-ui";
 
 class Register extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+    state = {
       email: "",
       password: ""
-    };
   }
 
   handleRegister = () => {
     if (!this.state.email || !this.state.password) {
-      alert("email or password cannot be empty");
+      alert("Email or Password cannot be empty");
       return;
     }
-    //To be done:check for empty values before hitting submit
     const self = this;
     var payload = {
       email: this.state.email,
@@ -29,12 +25,12 @@ class Register extends Component {
       .post(apiBaseUrl + "/register", payload)
       .then(response => {
         if (response.status === 200) {
-          alert("Registration was successful. Please login.");
+          alert("Registration was successful. You will be redirected to the login page.");
           self.props.history.push("/login");
         }
       })
       .catch(error => {
-        alert("Email taken. Please choose a different one.", error);
+        alert(error.response.data);
       });
   }
 
@@ -43,7 +39,7 @@ class Register extends Component {
       <div>
         <MuiThemeProvider>
           <div>
-            <AppBar title="Register" />
+            <div className="nav">REGISTER</div>
             <TextField
               text="email"
               hintText="Enter your email"
@@ -68,7 +64,6 @@ class Register extends Component {
             <RaisedButton
               label="Register"
               primary={true}
-              style={style}
               onClick={() => this.handleRegister()}
             />
             <h4>
@@ -81,7 +76,4 @@ class Register extends Component {
   }
 }
 
-const style = {
-  margin: 15
-};
 export default Register;
