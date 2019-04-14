@@ -4,14 +4,14 @@ import Cookies from "js-cookie";
 import { apiBaseUrl } from "../services/api";
 
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import { RaisedButton, TextField} from "material-ui";
+import { RaisedButton, TextField, CircularProgress } from "material-ui";
 
 class Login extends Component {
     state = {
       email: "",
       password: "",
       buttonLabel: "Register",
-      isLogin: true
+      loading: false
     };
 
   handleLogin = () => {
@@ -20,6 +20,9 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password
     };
+    this.setState({
+      loading: true
+    })
     axios
       .post(apiBaseUrl + "/login", payload)
       .then(response => {
@@ -31,6 +34,9 @@ class Login extends Component {
         }
       })
       .catch(error => {
+        this.setState({
+          loading: false
+        })
         alert(error.response.data);
       });
   }
@@ -61,11 +67,14 @@ class Login extends Component {
               }}
             />
             <br />
-            <RaisedButton
+            {this.state.loading ?
+            <CircularProgress/> :
+             <RaisedButton
               label="Login"
               primary={true}
               onClick={() => this.handleLogin()}
             />
+            }
             <br />
             <h4>
               Don't Have An Account? <a href="/register">Click here to register.</a>

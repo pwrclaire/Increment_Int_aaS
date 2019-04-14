@@ -3,12 +3,13 @@ import axios from "axios";
 import { apiBaseUrl } from "../services/api";
 
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import { RaisedButton, TextField} from "material-ui";
+import { RaisedButton, TextField, CircularProgress } from "material-ui";
 
 class Register extends Component {
     state = {
       email: "",
-      password: ""
+      password: "",
+      loading: false
   }
 
   handleRegister = () => {
@@ -16,8 +17,11 @@ class Register extends Component {
       alert("Email or Password cannot be empty");
       return;
     }
+    this.setState({
+      loading: true
+    })
     const self = this;
-    var payload = {
+    const payload = {
       email: this.state.email,
       password: this.state.password
     };
@@ -30,6 +34,9 @@ class Register extends Component {
         }
       })
       .catch(error => {
+        this.setState({
+          loading: false
+        })
         alert(error.response.data);
       });
   }
@@ -61,11 +68,13 @@ class Register extends Component {
               }}
             />
             <br />
+            {this.state.loading ?
+            <CircularProgress/> :
             <RaisedButton
               label="Register"
               primary={true}
               onClick={() => this.handleRegister()}
-            />
+            />}
             <h4>
               Have an account? <a href="/login">Login</a>
             </h4>
