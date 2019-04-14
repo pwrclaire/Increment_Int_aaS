@@ -2,6 +2,8 @@
 
 https://increment-integer.herokuapp.com/
 
+*inital run may take some time to load, please be patient*
+
 ## API
 
 Backend API: https://thinkific-server.herokuapp.com/api/user
