@@ -2,8 +2,6 @@
 
 https://increment-integer.herokuapp.com/
 
-*inital run may take some time to load, please be patient*
-
 ## Run Locally
 
 Install npm packages first
@@ -14,6 +12,8 @@ Then start local server
 ```
 npm start
 ```
+
+> *Note: Please make sure you nvm version is at least 8.0. Use* ```nvm ls``` *to check your current version and install and  use* ```nvm use 8``` *to ensure the project runs correctly.*
 
 ## API
 
