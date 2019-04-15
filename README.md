@@ -17,11 +17,13 @@ npm start
 
 ## API
 
-Backend API: https://thinkific-server.herokuapp.com/api/user
+Live API: https://thinkific-server.herokuapp.com/api/user
+
+To run the api locally, please download https://github.com/pwrclaire/increment_integer_aaS_Backend and run the server locally using npm. Configure the ***apiBaseUrl*** in src/services/api.js to your localhost port. The default port is 3000.
 
 ### CURL Insctructions
 
-Github: https://github.com/pwrclaire/increment_integer_aaS_Backend
+For instructions on the cURL commands, please visit: https://github.com/pwrclaire/increment_integer_aaS_Backend
 
 ### Technologies Used
 
